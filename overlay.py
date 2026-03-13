@@ -172,7 +172,7 @@ class Overlay(QWidget):
         # Use native windowOpacity property
         target_opacity = 1.0 if is_playing else 0.0
         current_opacity = self.windowOpacity()
-        with open("C:\\Central\\Miscllaneous\\is_playing.txt", "w") as f:
+        with open(r"C:\Central\Miscellaneous\is_playing.txt", "w") as f:
             f.write(str(is_playing))
 
         if abs(current_opacity - target_opacity) < 0.01:

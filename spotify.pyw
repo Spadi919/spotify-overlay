@@ -363,13 +363,22 @@ class SpotifyJarvis(QWidget):
         # Ask Spotify for the full data safely
         playback = sp.current_playback()
         if playback and playback['item']:
+
+            # get the last commit
+            sql = "select * from history order by id desc limit 1;"
+            cursor.execute(sql)
+            last_played = cursor.fetchone()
+            last_played = last_played[0]
+            
+
             
             sql = "INSERT INTO history (song_name, author) VALUES (%s, %s)"
             val = (song_name, artist)
 
             try:
-                cursor.execute(sql, val)
-                db.commit()
+                if last_played != playback['item']['name']:
+                    cursor.execute(sql, val)
+                    db.commit()
             except Exception as e:
                 log(f"Database error: {e}")
 
